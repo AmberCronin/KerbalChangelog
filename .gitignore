@@ -1,0 +1,22 @@
+# Autosave files
+*~
+*.swp
+*.bak
+
+# build
+[Oo]bj/
+[Bb]in/
+
+# globs
+.idea/
+*.DS_Store
+*.suo
+*.pdb
+*.userprefs
+
+# KSP dlls
+Assembly-Csharp.dll
+Assembly-Csharp-firstpass.dll
+UnityEngine.dll
+UnityEngine.UI.dll
+000_AT_Utils.dll
