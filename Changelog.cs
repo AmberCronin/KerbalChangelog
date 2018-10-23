@@ -52,7 +52,7 @@ namespace KerbalChangelog
 
 		private void Start()
 		{
-			changelogRect = new Rect(100, 100, 300f * widthMultiplier, 400f * heightMultiplier);
+			changelogRect = new Rect(100, 100, 800f * widthMultiplier, 1000f * heightMultiplier);
 			LoadChangelogs();
 		}
 		private void OnGUI()
@@ -104,6 +104,7 @@ namespace KerbalChangelog
 			Debug.Log($"[KCL] {changelogNodes.Length} changelogs found");
 			UrlDir.UrlConfig[] cfgDirs = GameDatabase.Instance.GetConfigs("KERBALCHANGELOG");
 			UrlDir gameDatabaseUrl = GameDatabase.Instance.root;
+			bool firstVersionNumber = true;
 			foreach (UrlDir.UrlConfig cfgDir in cfgDirs)
 			{
 				bool show = true;
@@ -118,6 +119,11 @@ namespace KerbalChangelog
 				string modChangelog = "";
 				foreach(ConfigNode vn in cln.GetNodes("VERSION"))
 				{
+					if(!firstVersionNumber)
+					{
+						modChangelog += "\n";
+					}
+					firstVersionNumber = false;
 					modChangelog += (vn.GetValue("version") + ":\n");
 					foreach(string change in vn.GetValues("change"))
 					{
