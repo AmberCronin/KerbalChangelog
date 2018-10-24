@@ -44,29 +44,68 @@ namespace KerbalChangelog
 		bool showChangelog = true;
 		Rect changelogRect;
 		Vector2 changelogScrollPos = new Vector2();
-		Dictionary<string, string> modChangelogs = new Dictionary<string, string>();
+		Vector2 quickSelectionScrollPos = new Vector2();
+		//Dictionary<string, string> modChangelogs = new Dictionary<string, string>();
+		List<Tuple<string, string>> modChangelogs= new List<Tuple<string, string>>();
 		int index = 0;
 		bool changesLoaded = false;
 		float widthMultiplier = Screen.width / 1920f;
 		float heightMultiplier = Screen.height / 1080f;
+		float windowWidth;
+		float windowHeight;
+		bool changelogSelection = false;
 
 		private void Start()
 		{
-			changelogRect = new Rect(100, 100, 800f * widthMultiplier, 1000f * heightMultiplier);
+			windowWidth = 600f * widthMultiplier;
+			windowHeight = 800f * heightMultiplier;
+			changelogRect = new Rect(100, 100, windowWidth, windowHeight);
 			LoadChangelogs();
 		}
 		private void OnGUI()
 		{
-			if (showChangelog && changesLoaded && modChangelogs.Count > 0)
+			if (showChangelog && changesLoaded && modChangelogs.Count > 0 && !changelogSelection)
 			{
-				changelogRect = GUILayout.Window(89156, changelogRect, DrawChangelogWindow, modChangelogs.Keys.ElementAt(index), GUILayout.Width(600f * widthMultiplier), GUILayout.Height(800f * heightMultiplier));
+				changelogRect = GUILayout.Window(89156, changelogRect, DrawChangelogWindow, modChangelogs[index].item1, GUILayout.Width(windowWidth), GUILayout.Height(windowHeight));
 			}
+			else if (showChangelog && changesLoaded && modChangelogs.Count > 0 && changelogSelection)
+			{
+				changelogRect = GUILayout.Window(89157, changelogRect, DrawChangelogSelectionWindow, "Kerbal Changelog", GUILayout.Width(windowWidth), GUILayout.Height(windowHeight));
+			}
+		}
+		private void DrawChangelogSelectionWindow(int id)
+		{ 
+			GUI.DragWindow(new Rect(0, 0, changelogRect.width, 20));
+			GUILayout.BeginHorizontal();
+			GUILayout.FlexibleSpace();
+			if(GUILayout.Button("Read changelogs"))
+			{
+				changelogSelection = false;
+			}
+			GUILayout.EndHorizontal();
+			quickSelectionScrollPos = GUILayout.BeginScrollView(quickSelectionScrollPos);
+			foreach(Tuple<string, string> modChange in modChangelogs)
+			{
+				if(GUILayout.Button(modChange.item1))
+				{
+					index = modChangelogs.IndexOf(modChange);
+					changelogSelection = false;
+				}
+			}
+			GUILayout.EndScrollView();
 		}
 		private void DrawChangelogWindow(int id)
 		{
 			GUI.DragWindow(new Rect(0, 0, changelogRect.width, 20));
+			GUILayout.BeginHorizontal();
+			GUILayout.FlexibleSpace();
+			if(GUILayout.Button("Select changelogs"))
+			{
+				changelogSelection = true;
+			}
+			GUILayout.EndHorizontal();
 			changelogScrollPos = GUILayout.BeginScrollView(changelogScrollPos);
-			GUILayout.Label(modChangelogs.Values.ElementAt(index));
+			GUILayout.Label(modChangelogs[index].item2);
 			GUILayout.EndScrollView();
 			GUILayout.BeginHorizontal();
 			if(GUILayout.Button("Previous"))
@@ -131,7 +170,7 @@ namespace KerbalChangelog
 					}
 				}
 				Debug.Log($"[KCL] Adding changelog\n{modChangelog} for mod {mod}");
-				modChangelogs.Add(mod, modChangelog);
+				modChangelogs.Add(new Tuple<string, string>(mod, modChangelog));
 				if (!cln.SetValue("showChangelog", false))
 				{
 					Debug.Log("[KCL] Unable to set value 'showChangelog'.");
