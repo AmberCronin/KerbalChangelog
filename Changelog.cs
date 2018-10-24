@@ -59,7 +59,7 @@ namespace KerbalChangelog
 		{
 			if (showChangelog && changesLoaded && modChangelogs.Count > 0)
 			{
-				changelogRect = GUILayout.Window(89156, changelogRect, DrawChangelogWindow, modChangelogs.Keys.ElementAt(index), GUILayout.Width(300f * widthMultiplier), GUILayout.Height(400f * heightMultiplier));
+				changelogRect = GUILayout.Window(89156, changelogRect, DrawChangelogWindow, modChangelogs.Keys.ElementAt(index), GUILayout.Width(600f * widthMultiplier), GUILayout.Height(800f * heightMultiplier));
 			}
 		}
 		private void DrawChangelogWindow(int id)
@@ -142,6 +142,7 @@ namespace KerbalChangelog
 				}
 				Debug.Log($"[KCL] {cfgDir.parent.fullPath}");
 				cfgDir.config.Save(cfgDir.parent.fullPath);
+				firstVersionNumber = true;
 			}
 			changesLoaded = true;
 		}
