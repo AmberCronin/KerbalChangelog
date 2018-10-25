@@ -11,7 +11,7 @@ KERBALCHANGELOG //Required to have this name
   modName = KerbalChangeLog //Add your mod's name here
   VERSION //Declares a version node
   {
-    version = 1.1 //Version number
+    version = 1.1 //Version number, numbers only with no spaces!
     change = Fixed window scrolling //any changes in that version. There can be as many change fields as you want
     change = Added shiny buttons
     change = Removed bugs
