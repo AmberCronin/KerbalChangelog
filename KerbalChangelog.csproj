@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>KerbalChangelog</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,11 +32,11 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.4.3 dependencies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.5.1 Dependencies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.4.3 dependencies\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.5.1 Dependencies\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -47,11 +47,11 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.4.3 dependencies\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.5.1 Dependencies\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.4.3 dependencies\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\..\Desktop\KSP Mod stuff\KSP 1.5.1 Dependencies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
