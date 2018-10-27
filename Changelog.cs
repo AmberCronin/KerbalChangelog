@@ -190,61 +190,78 @@ namespace KerbalChangelog
 		}
 		private string HighestVersion(List<string> versions)
 		{
-			Debug.Log("[KCL] Getting highest version...");
-			int numOfMajMinRevs = 0;
-			Debug.Log("[KCL] Finding the maximum version length");
-			for (int i = 0; i < versions.Count; i++)
+			Debug.Log($"[KCL] Getting highest version");
+			int numOfMinVersions = -1;
+			foreach(string s in versions)
 			{
-				if(NumberOfVersionSeperators(versions[i]) > numOfMajMinRevs)
+				if((NumberOfVersionSeperators(s) + 1) > numOfMinVersions)
 				{
-					numOfMajMinRevs = NumberOfVersionSeperators(versions[i]) + 1; //because this only returns the number of periods in the version string
+					numOfMinVersions = NumberOfVersionSeperators(s) + 1;
 				}
 			}
-			Debug.Log($"[KCL] Filling version array: int[{versions.Count}, {numOfMajMinRevs}]");
-			int[,] versionArray = new int[versions.Count, numOfMajMinRevs];
-			FillArray(ref versionArray, -1);
-			Debug.Log("[KCL] Populating version array (string parsing)");
-			for(int i = 0; i < versions.Count; i++)
+			Debug.Log($"[KCL] numOfMinVersions={numOfMinVersions}");
+			int[] highestVersions = new int[numOfMinVersions];
+			FillArray(ref highestVersions, -1);
+			List<string> avalibleVersions = new List<string>(versions);
+			for(int i = 0; i < avalibleVersions.Count; i++)
 			{
-				for(int j = 0; j < NumberOfVersionSeperators(versions[i]) + 1; j++)
+				if (avalibleVersions[i].Split('.').Length < numOfMinVersions)
 				{
-					Debug.Log($"[KCL] i={i}, j={j} in string parsing");
-					if(int.TryParse(versions[i].Split('.')[j], out _))
+					for (int j = 0; j < numOfMinVersions - avalibleVersions[i].Split('.').Length; j++)
 					{
-						versionArray[i, j] = int.Parse(versions[i].Split('.')[j]);
-						Debug.Log($"[KCL] Filled versionArray[{i}, {j}] with value {versionArray[i, j]}");
-					}
-					else
-					{
-						Debug.Log($"[KCL] Could not parse parital version {j} of {versions[i]} as it is not an integer value");
-						versionArray[i, j] = -1;
+						avalibleVersions[i] += ".0";
 					}
 				}
 			}
-			int[] largestVersion = new int[numOfMajMinRevs];
-			FillArray(ref largestVersion, -1);
-			Debug.Log("[KCL] Deterniming largest version");
-			for(int i = 0; i < numOfMajMinRevs; i++)
+			List<string> avalibleVersionsCopy = new List<string>(avalibleVersions);
+			for (int i = 0; i < numOfMinVersions; i++)
 			{
-				for(int j = 0; j < versionArray.GetLength(0); j++)
+				Debug.Log($"[KCL] version segment = {i}");
+				foreach (string s in avalibleVersions)
 				{
-					if (versionArray[j, i] > largestVersion[i])
+					Debug.Log($"[KCL] s={s}");
+					if (int.Parse(s.Split('.')[i]) > highestVersions[i])
 					{
-						Debug.Log($"[KCL] Filling largestVersion[{i}] with {versionArray[j, i]}");
-						largestVersion[i] = versionArray[j, i];
+						Debug.Log($"[KCL] s was bigger than highestVersions[{i}]");
+						highestVersions[i] = int.Parse(s.Split('.')[i]);
+						avalibleVersionsCopy.Clear();
+						avalibleVersionsCopy.Add(s);
+					}
+					else if (int.Parse(s.Split('.')[i]) == highestVersions[i])
+					{
+						Debug.Log($"[KCL] s was the same as highestVersions[{i}]");
+						avalibleVersionsCopy.Add(s);
 					}
 				}
+				avalibleVersions = new List<string>(avalibleVersionsCopy);
 			}
-			string version = "v";
-			for(int i = 0; i < largestVersion.Length; i++)
+			string returnVersion = "v";
+			foreach (string s in avalibleVersions)
 			{
-				if(largestVersion[i] != -1)
+				Debug.Log($"[KCL] length of avalibleVersions={avalibleVersions.Count}");
+				string[] versionArray = s.Split('.');
+				int numOfActualVersions = versionArray.Length;
+				for(int i = versionArray.Length - 1; i >= 0; i--)
 				{
-					version += ("." + largestVersion[i].ToString());
+					if(int.Parse(versionArray[i]) == 0)
+					{
+						numOfActualVersions--;
+					}
+					else if(int.Parse(versionArray[i]) != 0)
+					{
+						break;
+					}
 				}
+				Debug.Log($"[KCL] length of numOfActualVerions={numOfActualVersions}");
+				for (int i = 0; i < numOfActualVersions; i++)
+				{
+					returnVersion += ("." + s.Split('.')[i]);
+				}
+				returnVersion += ".0";
+				return returnVersion;
 			}
-			Debug.Log("[KCL] Largest version is " + version);
-			return version;
+			Debug.Log($"[KCL] Highest version is {returnVersion}");
+			return returnVersion;
 		}
 		private void FillArray(ref int[] array, int num)
 		{
