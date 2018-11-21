@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace KerbalChangelog
 {
-	[KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
+	[KSPAddon(KSPAddon.Startup.MainMenu, false)]
 	public class Changelog : MonoBehaviour
 	{
 		/*
@@ -139,11 +139,7 @@ namespace KerbalChangelog
 		}
 		private void LoadChangelogs()
 		{
-			Debug.Log("[KCL] Loading changelogs...");
-			ConfigNode[] changelogNodes = GameDatabase.Instance.GetConfigNodes("KERBALCHANGELOG");
-			Debug.Log($"[KCL] {changelogNodes.Length} changelogs found");
 			UrlDir.UrlConfig[] cfgDirs = GameDatabase.Instance.GetConfigs("KERBALCHANGELOG");
-			UrlDir gameDatabaseUrl = GameDatabase.Instance.root;
 			bool firstVersionNumber = true;
 			foreach (UrlDir.UrlConfig cfgDir in cfgDirs)
 			{
@@ -155,7 +151,6 @@ namespace KerbalChangelog
 					continue;
 				}
 				string mod = cln.GetValue("modName");
-				Debug.Log($"[KCL] {mod}'s changelog is being displayed: {show}");
 				string modChangelog = "";
 				List<string> version = new List<string>();
 				foreach(ConfigNode vn in cln.GetNodes("VERSION"))
@@ -172,25 +167,18 @@ namespace KerbalChangelog
 						modChangelog += ("* " + change + "\n");
 					}
 				}
-				Debug.Log($"[KCL] Adding changelog\n{modChangelog} for mod {mod}");
 				modChangelogs.Add(new Tuple<string, string, string>(mod, modChangelog, HighestVersion(version)));
 				if (!cln.SetValue("showChangelog", false))
 				{
 					Debug.Log("[KCL] Unable to set value 'showChangelog'.");
 				}
-				else
-				{
-					Debug.Log("[KCL] Set value of 'showChangelog' to False");
-				}
-				Debug.Log($"[KCL] {cfgDir.parent.fullPath}");
-				cfgDir.config.Save(cfgDir.parent.fullPath);
+				cfgDir.parent.SaveConfigs();
 				firstVersionNumber = true;
 			}
 			changesLoaded = true;
 		}
 		private string HighestVersion(List<string> versions)
 		{
-			Debug.Log($"[KCL] Getting highest version");
 			int numOfMinVersions = -1;
 			foreach(string s in versions)
 			{
@@ -199,7 +187,6 @@ namespace KerbalChangelog
 					numOfMinVersions = NumberOfVersionSeperators(s) + 1;
 				}
 			}
-			Debug.Log($"[KCL] numOfMinVersions={numOfMinVersions}");
 			int[] highestVersions = new int[numOfMinVersions];
 			FillArray(ref highestVersions, -1);
 			List<string> avalibleVersions = new List<string>(versions);
@@ -216,20 +203,17 @@ namespace KerbalChangelog
 			List<string> avalibleVersionsCopy = new List<string>(avalibleVersions);
 			for (int i = 0; i < numOfMinVersions; i++)
 			{
-				Debug.Log($"[KCL] version segment = {i}");
 				foreach (string s in avalibleVersions)
 				{
 					Debug.Log($"[KCL] s={s}");
 					if (int.Parse(s.Split('.')[i]) > highestVersions[i])
 					{
-						Debug.Log($"[KCL] s was bigger than highestVersions[{i}]");
 						highestVersions[i] = int.Parse(s.Split('.')[i]);
 						avalibleVersionsCopy.Clear();
 						avalibleVersionsCopy.Add(s);
 					}
 					else if (int.Parse(s.Split('.')[i]) == highestVersions[i])
 					{
-						Debug.Log($"[KCL] s was the same as highestVersions[{i}]");
 						avalibleVersionsCopy.Add(s);
 					}
 				}
@@ -238,7 +222,6 @@ namespace KerbalChangelog
 			string returnVersion = "v";
 			foreach (string s in avalibleVersions)
 			{
-				Debug.Log($"[KCL] length of avalibleVersions={avalibleVersions.Count}");
 				string[] versionArray = s.Split('.');
 				int numOfActualVersions = versionArray.Length;
 				for(int i = versionArray.Length - 1; i >= 0; i--)
@@ -252,7 +235,6 @@ namespace KerbalChangelog
 						break;
 					}
 				}
-				Debug.Log($"[KCL] length of numOfActualVerions={numOfActualVersions}");
 				for (int i = 0; i < numOfActualVersions; i++)
 				{
 					returnVersion += ("." + s.Split('.')[i]);
@@ -260,7 +242,6 @@ namespace KerbalChangelog
 				returnVersion += ".0";
 				return returnVersion;
 			}
-			Debug.Log($"[KCL] Highest version is {returnVersion}");
 			return returnVersion;
 		}
 		private void FillArray(ref int[] array, int num)
