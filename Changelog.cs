@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -147,10 +148,11 @@ namespace KerbalChangelog
                     continue;
                 }
                 string mod = "";
-                if (cln.TryGetValue("modName", ref mod))
+                if (!cln.TryGetValue("modName", ref mod))
                 {
                     Debug.Log("[KCL] Missing modName in:" + cfgDir);
-                };
+                    continue;
+                }
                 string modChangelog = "";
                 List<string> version = new List<string>();
                 foreach (ConfigNode vn in cln.GetNodes("VERSION"))
@@ -161,7 +163,7 @@ namespace KerbalChangelog
                     }
                     firstVersionNumber = false;
                     string ver = "";
-                    if (!vn.TryGetValue("version", ref ver))
+                    if (vn.TryGetValue("version", ref ver))
                     {
                         version.Add(ver);
                         modChangelog += (ver + ":\n");
