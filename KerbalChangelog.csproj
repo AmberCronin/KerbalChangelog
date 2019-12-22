@@ -28,12 +28,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\kspdlls\1.8.1\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\kspdlls\1.8.1\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\..\kspdlls\1.8.1\mscorlib.dll</HintPath>
     </Reference>
@@ -43,23 +37,38 @@
     <Reference Include="System">
       <HintPath>..\..\..\kspdlls\1.8.1\System.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\kspdlls\1.8.1\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\kspdlls\1.8.1\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\kspdlls\1.8.1\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\kspdlls\1.8.1\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\kspdlls\1.8.1\System.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\kspdlls\1.8.1\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\kspdlls\1.8.1\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\kspdlls\1.8.1\UnityEngine.dll</HintPath>
+      <HintPath>..\..\kspdlls\1.8.1\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\kspdlls\1.8.1\UnityEngine.IMGUIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\kspdlls\1.8.1\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\kspdlls\1.8.1\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\..\kspdlls\1.8.1\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath>..\..\kspdlls\1.8.1\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\kspdlls\1.8.1\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\kspdlls\1.8.1\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\..\kspdlls\1.8.1\UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
