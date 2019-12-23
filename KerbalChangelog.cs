@@ -172,7 +172,7 @@ namespace KerbalChangelog
                     }
                     else
                     {
-                        Debug.Log("[KCL] badly formatted version");
+                        Debug.Log("[KCL] Badly formatted version");
                     }
 
                     foreach (string change in vn.GetValues("change"))
@@ -218,7 +218,6 @@ namespace KerbalChangelog
             {
                 foreach (string s in avalibleVersions)
                 {
-                    Debug.Log($"[KCL] s={s}");
                     if (int.Parse(s.Split('.')[i]) > highestVersions[i])
                     {
                         highestVersions[i] = int.Parse(s.Split('.')[i]);

@@ -43,15 +43,6 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\kspdlls\1.8.1\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="mscorlib">
-      <HintPath>..\..\kspdlls\1.8.1\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core">
-      <HintPath>..\..\kspdlls\1.8.1\System.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>..\..\kspdlls\1.8.1\System.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\kspdlls\1.8.1\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
