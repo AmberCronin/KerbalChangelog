@@ -1,0 +1,81 @@
+﻿using System;
+using System.Text.RegularExpressions;
+
+namespace KerbalChangelog
+{
+    public class ChangelogVersion : IComparable
+    {
+        bool versionNull = false;
+
+        public int major { get; private set; }
+        public int minor { get; private set; }
+        public int patch { get; private set; }
+        public int build { get; private set; }
+
+        public ChangelogVersion(int maj, int min, int pat, int bui)
+        {
+            major = maj;
+            minor = min;
+            patch = pat;
+            build = bui;
+        }
+        // May fail, needs a try/catch
+        public ChangelogVersion(string version)
+        {
+            if (version == "null")
+            {
+                versionNull = true;
+                return;
+            }
+
+            Regex pattern = new Regex("(^\\d+\\.\\d+\\.\\d+(\\.\\d)?$)"); //matches version numbers starting at the beginning to the end of the string
+
+            if (!pattern.IsMatch(version))
+                throw new ArgumentException("version is not a valid version");
+
+            string[] splitVersions = version.Split('.');
+
+            major = int.Parse(splitVersions[0]);
+            minor = int.Parse(splitVersions[1]);
+            patch = int.Parse(splitVersions[2]);
+            if (splitVersions.Length > 3)
+                build = int.Parse(splitVersions[3]);
+            else
+                patch = 0;
+        }
+
+        public override string ToString()
+        {
+            if (versionNull)
+                return "D.N.E";
+            return $"{major}.{minor}.{patch}.{build}";
+        }
+
+        //This comparator will sort objects from highest version to lowest version
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+
+            ChangelogVersion oCLV = obj as ChangelogVersion;
+            if (oCLV != null)
+            {
+                if (oCLV.major - this.major == 0)
+                {
+                    if (oCLV.minor - this.minor == 0)
+                    {
+                        if (oCLV.patch - this.patch == 0)
+                        {
+                            return oCLV.build - this.build;
+                        }
+                        return oCLV.patch - this.patch;
+                    }
+                    return oCLV.minor - this.minor;
+                }
+                return oCLV.major - this.major;
+            }
+            else
+                throw new ArgumentException("Object is not a ChangelogVersion");
+        }
+    }
+}
