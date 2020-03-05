@@ -69,8 +69,7 @@ namespace KerbalChangelog
             if (obj == null)
                 return 1;
 
-            ChangelogVersion oCLV = obj as ChangelogVersion;
-            if (oCLV != null)
+            if (obj is ChangelogVersion oCLV)
             {
                 if (oCLV.major - this.major == 0)
                 {
@@ -78,13 +77,13 @@ namespace KerbalChangelog
                     {
                         if (oCLV.patch - this.patch == 0)
                         {
-                            return oCLV.build - this.build;
+                            return oCLV.build.CompareTo(this.build);
                         }
-                        return oCLV.patch - this.patch;
+                        return oCLV.patch.CompareTo(this.patch);
                     }
-                    return oCLV.minor - this.minor;
+                    return oCLV.minor.CompareTo(this.minor);
                 }
-                return oCLV.major - this.major;
+                return oCLV.major.CompareTo(this.major);
             }
             else
                 throw new ArgumentException("Object is not a ChangelogVersion");

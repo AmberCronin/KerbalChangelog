@@ -35,12 +35,6 @@ namespace KerbalChangelog
          *  After the changelog is viewed in-game, the value will be automatically set to false.
         */
 
-        // No creating new instances of this
-        private ChangelogController()
-        {
-
-        }
-
         Rect displayWindow;
         Vector2 changelogScrollPos = new Vector2();
         Vector2 quickSelectionScrollPos = new Vector2();
@@ -103,7 +97,7 @@ namespace KerbalChangelog
             }
             GUILayout.EndHorizontal();
             changelogScrollPos = GUILayout.BeginScrollView(changelogScrollPos);
-            GUILayout.Label(dispcl.ToString());
+            GUILayout.Label(dispcl.ToString() + "\n"); //add the \n for seperation of changelogs
             GUILayout.EndScrollView();
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Previous"))
@@ -154,7 +148,6 @@ namespace KerbalChangelog
                     changelogSelection = false;
                 }
             }
-
             GUILayout.EndScrollView();
         }
     }

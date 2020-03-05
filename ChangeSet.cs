@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KerbalChangelog
 {
-    public class ChangeSet
+    public class ChangeSet : IComparable
     {
         public ChangelogVersion version { get; private set; }
         List<Change> changes = new List<Change>();
@@ -17,7 +17,7 @@ namespace KerbalChangelog
         public ChangeSet(ConfigNode vn, string cfgDirName)
         {
             string _version = "";
-            if(!vn.TryGetValue("version", ref _version))
+            if (!vn.TryGetValue("version", ref _version))
             {
                 Debug.Log("[KCL] Badly formatted version in directory " + cfgDirName);
                 _version = "null";
@@ -25,7 +25,7 @@ namespace KerbalChangelog
 
             version = new ChangelogVersion(_version);
 
-            foreach(string change in vn.GetValues("change"))
+            foreach (string change in vn.GetValues("change"))
             {
                 changes.Add(new Change(change, new List<string>()));
             }
@@ -40,11 +40,26 @@ namespace KerbalChangelog
         public override string ToString()
         {
             string ret = version + "\n";
-            foreach(Change c in changes)
+            foreach (Change c in changes)
             {
                 ret += c.ToString();
             }
             return ret;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+
+            if (obj is ChangeSet cs)
+            {
+                return version.CompareTo(cs.version);
+                //return ((IComparable)version).CompareTo(obj);
+            }
+            else
+                throw new ArgumentException("Object is not a ChangeSet");
+
         }
     }
 }
