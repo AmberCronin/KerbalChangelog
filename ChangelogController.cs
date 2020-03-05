@@ -55,6 +55,7 @@ namespace KerbalChangelog
 
         private void Start()
         {
+            Debug.Log("[KCL] Starting up");
             //set up the window
             displayWindow = new Rect(100, 100, WindowConstants.windowWidth, WindowConstants.windowHeight);
             changelogs = LoadChangelogs();
@@ -63,6 +64,7 @@ namespace KerbalChangelog
 
         private List<Changelog> LoadChangelogs()
         {
+            Debug.Log("[KCL] Loading changelogs...");
             List<Changelog> retList = new List<Changelog>();
             UrlDir.UrlConfig[] cfgDirs = GameDatabase.Instance.GetConfigs("KERBALCHANGELOG");
             foreach (var cfgDir in cfgDirs)
@@ -75,6 +77,10 @@ namespace KerbalChangelog
 
         private void OnGUI()
         {
+            if (changelogs.Count == 0)
+            {
+                return;
+            }
             dispcl = changelogs[dispIndex];
             if (showChangelog && changesLoaded && !changelogSelection)
             {

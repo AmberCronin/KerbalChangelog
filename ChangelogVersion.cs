@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace KerbalChangelog
 {
     public class ChangelogVersion : IComparable
     {
         bool versionNull = false;
+        bool malformedVersionString = false;
 
         public int major { get; private set; }
         public int minor { get; private set; }
@@ -28,20 +30,30 @@ namespace KerbalChangelog
                 return;
             }
 
-            Regex pattern = new Regex("(^\\d+\\.\\d+\\.\\d+(\\.\\d)?$)"); //matches version numbers starting at the beginning to the end of the string
-
+            Regex pattern = new Regex("(\\d+\\.\\d+\\.\\d+(\\.\\d+)?)"); //matches version numbers starting at the beginning to the end of the string
+            Regex malformedPattern = new Regex("\\d+\\.\\d+(\\.\\d+)?(\\.\\d+)?");
             if (!pattern.IsMatch(version))
-                throw new ArgumentException("version is not a valid version");
-
+            {
+                if (!malformedPattern.IsMatch(version))
+                {
+                    Debug.Log("[KCL] broken version string: " + version);
+                    throw new ArgumentException("version is not a valid version");
+                }
+                Debug.Log("[KCL] malformed version string: " + version);
+                malformedVersionString = true;
+            }
             string[] splitVersions = version.Split('.');
 
             major = int.Parse(splitVersions[0]);
             minor = int.Parse(splitVersions[1]);
-            patch = int.Parse(splitVersions[2]);
+            if (!malformedVersionString)
+                patch = int.Parse(splitVersions[2]);
+            else
+                patch = 0;
             if (splitVersions.Length > 3)
                 build = int.Parse(splitVersions[3]);
             else
-                patch = 0;
+                build = 0;
         }
 
         public override string ToString()
