@@ -25,8 +25,9 @@ namespace KerbalChangelog
             changeSets = cs;
         }
 
-        public Changelog(ConfigNode cn, string cfgDirName)
+        public Changelog(ConfigNode cn, UrlDir.UrlConfig cfgDir)
         {
+			string cfgDirName = cfgDir.ToString();
             string _modname = "";
             if (!cn.TryGetValue("modName", ref _modname))
             {
@@ -45,8 +46,9 @@ namespace KerbalChangelog
                 Debug.Log("[KCL] Assuming [true] to show changelog, adding field to changelog...");
                 if (!cn.SetValue("showChangelog", false, true)) //creates a new field for the viewing status, setting it to false
                 {
-                    Debug.Log("[KCL] Unable to create 'showChangelog' in directory " + cfgDirName);
+                    Debug.Log("[KCL] Unable to create 'showChangelog' in directory " + cfgDirName + " (field was missing in file)");
                 }
+				cfgDir.parent.SaveConfigs();
             }
             foreach(ConfigNode vn in cn.GetNodes("VERSION"))
             {

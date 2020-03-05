@@ -64,8 +64,14 @@ namespace KerbalChangelog
             foreach (var cfgDir in cfgDirs)
             {
                 ConfigNode kclNode = cfgDir.config; //loads the config node from the directory
-                retList.Add(new Changelog(kclNode, cfgDir.ToString()));
-            }
+                retList.Add(new Changelog(kclNode, cfgDir));
+
+				if(!kclNode.SetValue("showChangelog", false)) //sets changelogs to unviewable
+				{
+					Debug.Log("[KCL] Unable to set value 'showChangelog' in " + cfgDir.ToString());
+				}
+				cfgDir.parent.SaveConfigs();
+			}
             return retList;
         }
 

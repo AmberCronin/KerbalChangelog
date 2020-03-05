@@ -22,7 +22,7 @@ namespace KerbalChangelog
             build = bui;
         }
         // May fail, needs a try/catch
-        public ChangelogVersion(string version)
+        public ChangelogVersion(string version, string cfgDirName)
         {
             if (version == "null")
             {
@@ -39,7 +39,7 @@ namespace KerbalChangelog
                     Debug.Log("[KCL] broken version string: " + version);
                     throw new ArgumentException("version is not a valid version");
                 }
-                Debug.Log("[KCL] malformed version string: " + version);
+                Debug.Log("[KCL] malformed version string: " + version + " in directory " + cfgDirName);
                 malformedVersionString = true;
             }
             string[] splitVersions = version.Split('.');

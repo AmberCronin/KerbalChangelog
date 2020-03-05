@@ -23,7 +23,7 @@ namespace KerbalChangelog
                 _version = "null";
             }
 
-            version = new ChangelogVersion(_version);
+            version = new ChangelogVersion(_version, cfgDirName);
 
             foreach (string change in vn.GetValues("change"))
             {
