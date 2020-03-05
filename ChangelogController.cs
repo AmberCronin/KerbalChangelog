@@ -103,7 +103,7 @@ namespace KerbalChangelog
             }
             GUILayout.EndHorizontal();
             changelogScrollPos = GUILayout.BeginScrollView(changelogScrollPos);
-            GUILayout.Label(dispcl.ToString() + "\n"); //add the \n for seperation of changelogs
+            GUILayout.Label(dispcl.ToString()); //add the \n for seperation of changelogs
             GUILayout.EndScrollView();
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Previous"))

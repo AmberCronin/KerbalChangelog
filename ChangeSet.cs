@@ -25,17 +25,16 @@ namespace KerbalChangelog
 
             version = new ChangelogVersion(_version, cfgDirName);
 
+			//loads change fields (needed for backwards compatibility
             foreach (string change in vn.GetValues("change"))
             {
                 changes.Add(new Change(change, new List<string>()));
             }
-
-            /*
+			//loads change nodes
             foreach(ConfigNode chn in vn.GetNodes("CHANGE"))
             {
                 changes.Add(new Change(chn, cfgDirName));
             }
-            */
         }
         public override string ToString()
         {
@@ -44,7 +43,7 @@ namespace KerbalChangelog
             {
                 ret += c.ToString();
             }
-            return ret;
+            return ret + "\n";
         }
 
         public int CompareTo(object obj)
