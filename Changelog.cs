@@ -6,9 +6,9 @@ namespace KerbalChangelog
 {
     public class Changelog
     {
-        public string modName { get; private set; }
-		public string license { get; private set; }
-		public string author { get; private set; }
+		public string modName { get; private set; }
+		public string license { get; private set; } = null;
+		public string author { get; private set; } = null;
 
 		bool showCL = true;
 
@@ -18,8 +18,15 @@ namespace KerbalChangelog
             get
             {
                 changeSets.Sort();
-                return changeSets[0].version;
-            }
+				try
+				{
+					return changeSets[0].version;
+				}
+				catch (Exception e)
+				{
+					return null;
+				}
+			}
         }
 
         public Changelog(string mn, bool show, List<ChangeSet> cs)
@@ -63,6 +70,8 @@ namespace KerbalChangelog
         public override string ToString()
         {
             string ret = modName + "\n";
+			ret += ((author == null) ? "" : author + "\n");
+			ret += ((license == null) ? "" : license + "\n");
             foreach(ChangeSet cs in changeSets)
             {
                 ret += cs.ToString();
