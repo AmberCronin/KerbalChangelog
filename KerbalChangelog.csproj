@@ -69,8 +69,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KerbalChangelog.cs" />
+    <Compile Include="ChangelogController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Changelog.cs" />
+    <Compile Include="ChangeSet.cs" />
+    <Compile Include="ChangeSetAddStatus.cs" />
+    <Compile Include="Change.cs" />
+    <Compile Include="ChangelogVersion.cs" />
+    <Compile Include="WindowConstants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

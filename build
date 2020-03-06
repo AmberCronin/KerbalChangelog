@@ -1,2 +1,2 @@
 echo "Building KCL"
-mcs -L ~/kspdlls/1.8.1/ -out:bin/KerbalChangelog.dll -r:UnityEngine.dll,UnityEngine.UI.dll,Assembly-CSharp.dll,Assembly-CSharp-firstpass.dll,UnityEngine.CoreModule.dll,UnityEngine.UIElementsModule.dll,UnityEngine.UIModule.dll,UnityEngine.IMGUIModule.dll,mscorlib.dll,System.dll,System.Core.dll -t:library *.cs
+mcs -L ~/kspdlls/latest/ -out:/home/ent/.steam/steam/steamapps/common/Kerbal\ Space\ Program/GameData/KerbalChangeLog/KerbalChangelog.dll -r:UnityEngine.dll,UnityEngine.UI.dll,Assembly-CSharp.dll,Assembly-CSharp-firstpass.dll,UnityEngine.CoreModule.dll,UnityEngine.UIElementsModule.dll,UnityEngine.UIModule.dll,UnityEngine.IMGUIModule.dll,mscorlib.dll,System.dll,System.Core.dll -t:library *.cs
