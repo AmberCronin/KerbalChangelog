@@ -33,10 +33,10 @@ namespace KerbalChangelog
         public override string ToString()
         {
             string ret = "";
-            ret += "* " + change + "\n";
+            ret += " * " + change + "\n";
             foreach(string sc in subchanges)
             {
-                ret += " - " + sc + "\n";
+                ret += "      - " + sc + "\n"; //6 spaces ought to look good (or it does to me)
             }
             return ret;
         }

@@ -24,6 +24,7 @@ namespace KerbalChangelog
 				}
 				catch (Exception e)
 				{
+					Debug.Log("[KCL] No changesets exist.");
 					return null;
 				}
 			}
@@ -61,7 +62,20 @@ namespace KerbalChangelog
                 }
 				cfgDir.parent.SaveConfigs();
             }
-            foreach(ConfigNode vn in cn.GetNodes("VERSION"))
+
+			string _author = "";
+			if(cn.TryGetValue("author", ref _author))
+			{
+				author = _author;
+			}
+			string _license = "";
+			if(cn.TryGetValue("license", ref _license))
+			{
+				license = _license;
+			}
+
+
+			foreach (ConfigNode vn in cn.GetNodes("VERSION"))
             {
                 changeSets.Add(new ChangeSet(vn, cfgDirName));
             }
@@ -70,8 +84,8 @@ namespace KerbalChangelog
         public override string ToString()
         {
             string ret = modName + "\n";
-			ret += ((author == null) ? "" : author + "\n");
-			ret += ((license == null) ? "" : license + "\n");
+			ret += ((author == null) ? "" : "Created by: " + author + "\n");
+			ret += ((license == null) ? "\n" : "Licensed under the " + license + " license\n\n"); //give a double line break here
             foreach(ChangeSet cs in changeSets)
             {
                 ret += cs.ToString();
