@@ -7,7 +7,11 @@ namespace KerbalChangelog
     public class Changelog
     {
         public string modName { get; private set; }
-        bool showCL = true;
+		public string license { get; private set; }
+		public string author { get; private set; }
+
+		bool showCL = true;
+
         List<ChangeSet> changeSets = new List<ChangeSet>();
         public ChangelogVersion highestVersion
         {

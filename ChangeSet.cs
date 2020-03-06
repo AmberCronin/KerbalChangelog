@@ -22,11 +22,18 @@ namespace KerbalChangelog
                 Debug.Log("[KCL] Badly formatted version in directory " + cfgDirName);
                 _version = "null";
             }
-
-            version = new ChangelogVersion(_version, cfgDirName);
+			string _versionName = "";
+			if(!vn.TryGetValue("versionName", ref _versionName))
+			{
+				version = new ChangelogVersion(_version, cfgDirName);
+			}
+			else
+			{
+				version = new ChangelogVersion(_version, cfgDirName, _versionName);
+			}
 
 			//loads change fields (needed for backwards compatibility
-            foreach (string change in vn.GetValues("change"))
+			foreach (string change in vn.GetValues("change"))
             {
                 changes.Add(new Change(change, new List<string>()));
             }
@@ -54,10 +61,8 @@ namespace KerbalChangelog
             if (obj is ChangeSet cs)
             {
                 return version.CompareTo(cs.version);
-                //return ((IComparable)version).CompareTo(obj);
             }
-            else
-                throw new ArgumentException("Object is not a ChangeSet");
+            throw new ArgumentException("Object is not a ChangeSet");
 
         }
     }

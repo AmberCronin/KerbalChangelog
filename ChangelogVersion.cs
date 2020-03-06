@@ -14,15 +14,30 @@ namespace KerbalChangelog
         public int patch { get; private set; }
         public int build { get; private set; }
 
-        public ChangelogVersion(int maj, int min, int pat, int bui)
+		public string versionName { get; private set; } = null;
+		bool versionNameExists
+		{
+			get
+			{
+				if (versionName == null)
+					return false;
+				return true;
+			}
+		}
+
+		public ChangelogVersion(int maj, int min, int pat, int bui)
         {
             major = maj;
             minor = min;
             patch = pat;
             build = bui;
         }
-        // May fail, needs a try/catch
-        public ChangelogVersion(string version, string cfgDirName)
+		public ChangelogVersion(int maj, int min, int pat, int bui, string vName) : this(maj, min, pat, bui)
+		{
+			versionName = vName;
+		}
+		// May fail, needs a try/catch
+		public ChangelogVersion(string version, string cfgDirName)
         {
             if (version == "null")
             {
@@ -55,16 +70,26 @@ namespace KerbalChangelog
             else
                 build = 0;
         }
+		public ChangelogVersion(string version, string cfgDirName, string vName) : this(version, cfgDirName)
+		{
+			versionName = vName;
+		}
 
-        public override string ToString()
+		public override string ToString()
         {
             if (versionNull)
                 return "D.N.E";
-            return $"{major}.{minor}.{patch}.{build}";
+			return $"{major}.{minor}.{patch}.{build}" + (versionNameExists ? " \"" + versionName + "\"" : "");
         }
+		public string ToStringPure()
+		{
+			if (versionNull)
+				return "D.N.E";
+			return $"{major}.{minor}.{patch}.{build}";
+		}
 
-        //This comparator will sort objects from highest version to lowest version
-        public int CompareTo(object obj)
+		//This comparator will sort objects from highest version to lowest version
+		public int CompareTo(object obj)
         {
             if (obj == null)
                 return 1;
