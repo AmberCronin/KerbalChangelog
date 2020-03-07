@@ -83,8 +83,11 @@ namespace KerbalChangelog
 			changelogScrollPos = GUILayout.BeginScrollView(changelogScrollPos);
 			//GUIStyle style = new GUIStyle();
 			//style.richText = true;
-			//GUILayout.Label(dispcl.ToString(), style);
-			GUILayout.Label(dispcl.ToString());
+			var style = new GUIStyle(GUI.skin.label);
+			style.richText = true;
+			GUILayout.Label(dispcl.ToString(), style);
+
+			//GUILayout.Label(dispcl.ToString());
 			GUILayout.EndScrollView();
 			GUILayout.BeginHorizontal();
 			if (GUILayout.Button("Previous"))
