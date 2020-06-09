@@ -16,6 +16,8 @@ namespace KerbalChangelog
 		}
 		public ChangeSet(ConfigNode vn, string cfgDirName)
 		{
+			//TryGetValue returns true if the node exists, and false if the node doesn't
+			//By negating the value it allows you to catch bad TryGets
 			string _version = "";
 			if (!vn.TryGetValue("version", ref _version))
 			{
@@ -23,14 +25,13 @@ namespace KerbalChangelog
 				_version = "null";
 			}
 			string _versionName = "";
-			if(!vn.TryGetValue("versionName", ref _versionName))
-			{
-				version = new ChangelogVersion(_version, cfgDirName);
-			}
-			else
-			{
-				version = new ChangelogVersion(_version, cfgDirName, _versionName);
-			}
+			vn.TryGetValue("versionName", ref _versionName);
+			string _versionDate = "";
+			vn.TryGetValue("versionDate", ref _versionDate);
+			string _versionKSP = "";
+			vn.TryGetValue("versionKSP", ref _versionKSP);
+
+			version = new ChangelogVersion(_version, cfgDirName, _versionName, _versionDate, _versionKSP);
 
 			//loads change fields (needed for backwards compatibility
 			foreach (string change in vn.GetValues("change"))

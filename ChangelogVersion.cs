@@ -17,11 +17,31 @@ namespace KerbalChangelog
 		bool buildExisted;
 
 		public string versionName { get; private set; } = null;
-		bool versionNameExists
+		public bool versionNameExists
 		{
 			get
 			{
 				if (versionName == null)
+					return false;
+				return true;
+			}
+		}
+		public string versionDate { get; private set; } = null;
+		public bool versionDateExists
+		{
+			get
+			{
+				if (versionDate == null)
+					return false;
+				return true;
+			}
+		}
+		public string versionKSP { get; private set; } = null;
+		public bool versionKSPExists
+		{
+			get
+			{
+				if (versionKSP == null)
 					return false;
 				return true;
 			}
@@ -93,16 +113,24 @@ namespace KerbalChangelog
 		}
 		public ChangelogVersion(string version, string cfgDirName, string vName) : this(version, cfgDirName)
 		{
-			versionName = vName;
+			if (vName != "")
+				versionName = vName;
+		}
+		public ChangelogVersion(string version, string cfgDirName, string vName, string vDate, string vKSP) : this(version, cfgDirName, vName)
+		{
+			if (vDate != "")
+				versionDate = vDate;
+			if (vKSP != "")
+				versionKSP = vKSP;
 		}
 
 		public override string ToString()
 		{
 			if (versionNull)
 				return "D.N.E";
-			if(!buildExisted)
-				return $"{major}.{minor}.{patch}" + (versionNameExists ? " \"" + versionName + "\"" : "");
-			return $"{major}.{minor}.{patch}.{build}" + (versionNameExists ? " \"" + versionName + "\"" : "");
+			if (!buildExisted)
+				return $"{major}.{minor}.{patch}" + (versionNameExists ? " \"" + versionName + "\"" : "") + (versionDateExists ? ", released " + versionDate : "") + (versionKSPExists ? ", for KSP version " + versionKSP : "");
+			return $"{major}.{minor}.{patch}.{build}" + (versionNameExists ? " \"" + versionName + "\"" : "") + (versionDateExists ? ", released " + versionDate : "") + (versionKSPExists ? ", for KSP version " + versionKSP : "");
 		}
 		public string ToStringPure()
 		{
