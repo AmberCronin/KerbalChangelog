@@ -62,7 +62,7 @@ namespace KerbalChangelog
 			dispcl = changelogs[dispIndex];
 			if (showChangelog && changesLoaded && !changelogSelection)
 			{
-				displayWindow = GUILayout.Window(89156, displayWindow, DrawChangelogWindow, dispcl.modName + " " + dispcl.highestVersion, GUILayout.Width(WindowConstants.windowWidth), GUILayout.Height(WindowConstants.windowHeight));
+				displayWindow = GUILayout.Window(89156, displayWindow, DrawChangelogWindow, dispcl.modName + " " + dispcl.highestVersion.ToStringVersionName(), GUILayout.Width(WindowConstants.windowWidth), GUILayout.Height(WindowConstants.windowHeight));
 			}
 			else if (showChangelog && changesLoaded && changelogSelection)
 			{
@@ -85,6 +85,13 @@ namespace KerbalChangelog
 			//style.richText = true;
 			var style = new GUIStyle(GUI.skin.label);
 			style.richText = true;
+			GUILayout.BeginHorizontal();
+			if(GUILayout.Button("Visit this mod's website"))
+			{
+				Application.OpenURL("https://" + dispcl.webpage);
+			}
+			GUILayout.FlexibleSpace();
+			GUILayout.EndHorizontal();
 			GUILayout.Label(dispcl.ToString(), style);
 
 			//GUILayout.Label(dispcl.ToString());

@@ -140,6 +140,14 @@ namespace KerbalChangelog
 				return $"{major}.{minor}.{patch}";
 			return $"{major}.{minor}.{patch}.{build}";
 		}
+		public string ToStringVersionName()
+		{
+			if (versionNull)
+				return "D.N.E";
+			if (!buildExisted)
+				return $"{major}.{minor}.{patch}" + (versionNameExists ? " \"" + versionName + "\"" : "");
+			return $"{major}.{minor}.{patch}" + (versionNameExists ? " \"" + versionName + "\"" : "");
+		}
 
 		//This comparator will sort objects from highest version to lowest version
 		public int CompareTo(object obj)

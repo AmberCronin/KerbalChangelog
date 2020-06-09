@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Linq;
 using UnityEngine;
 
 namespace KerbalChangelog
@@ -9,6 +11,7 @@ namespace KerbalChangelog
 		public string modName { get; private set; }
 		public string license { get; private set; } = null;
 		public string author { get; private set; } = null;
+		public string webpage { get; private set; } = null;
 
 		public bool showCL { get; private set; } = true;
 
@@ -78,6 +81,14 @@ namespace KerbalChangelog
 			{
 				license = _license;
 			}
+			string _website = "";
+			if (cn.TryGetValue("website", ref _website))
+			{
+				if(ValidateWebsite(_website))
+				{
+					webpage = _website;
+				}
+			}
 
 
 			foreach (ConfigNode vn in cn.GetNodes("VERSION"))
@@ -97,6 +108,31 @@ namespace KerbalChangelog
 				ret += cs.ToString();
 			}
 			return ret;
+		}
+		bool ValidateWebsite(string url)
+		{
+			string[] urls = { 	"github.com", 
+								"forum.kerbalspaceprogram.com", 
+								"kerbaltek.com", 
+								"KerbalX.com", 
+								"spacedock.info", 
+								"kerbokatz.github.io", 
+								"krpc.github.io", 
+								"genhis.github.io", 
+								"snjo.github.io",
+								"www.curseforge.com" };
+
+			Uri siteuri = new Uri("https://" + url);
+			string site = siteuri.Host;
+
+			var hosts = from uristr in urls
+						select (new Uri("https://" + uristr)).Host;
+
+			if (hosts.Contains(site))
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 }
