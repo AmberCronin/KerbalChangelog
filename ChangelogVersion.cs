@@ -14,6 +14,8 @@ namespace KerbalChangelog
 		public int patch { get; private set; }
 		public int build { get; private set; }
 
+		bool buildExisted;
+
 		public string versionName { get; private set; } = null;
 		bool versionNameExists
 		{
@@ -25,17 +27,30 @@ namespace KerbalChangelog
 			}
 		}
 
+		public ChangelogVersion(int maj, int min, int pat)
+		{
+			major = maj;
+			minor = min;
+			patch = pat;
+			buildExisted = false;
+		}
 		public ChangelogVersion(int maj, int min, int pat, int bui)
 		{
 			major = maj;
 			minor = min;
 			patch = pat;
 			build = bui;
+			buildExisted = true;
+		}
+		public ChangelogVersion(int maj, int min, int pat, string vName) : this(maj, min, pat)
+		{
+			versionName = vName;
 		}
 		public ChangelogVersion(int maj, int min, int pat, int bui, string vName) : this(maj, min, pat, bui)
 		{
 			versionName = vName;
 		}
+
 		// May fail, needs a try/catch
 		public ChangelogVersion(string version, string cfgDirName)
 		{
@@ -66,9 +81,15 @@ namespace KerbalChangelog
 			else
 				patch = 0;
 			if (splitVersions.Length > 3)
+			{
 				build = int.Parse(splitVersions[3]);
+				buildExisted = true;
+			}
 			else
+			{
 				build = 0;
+				buildExisted = false;
+			}
 		}
 		public ChangelogVersion(string version, string cfgDirName, string vName) : this(version, cfgDirName)
 		{
@@ -79,12 +100,16 @@ namespace KerbalChangelog
 		{
 			if (versionNull)
 				return "D.N.E";
+			if(!buildExisted)
+				return $"{major}.{minor}.{patch}" + (versionNameExists ? " \"" + versionName + "\"" : "");
 			return $"{major}.{minor}.{patch}.{build}" + (versionNameExists ? " \"" + versionName + "\"" : "");
 		}
 		public string ToStringPure()
 		{
 			if (versionNull)
 				return "D.N.E";
+			if (!buildExisted)
+				return $"{major}.{minor}.{patch}";
 			return $"{major}.{minor}.{patch}.{build}";
 		}
 
