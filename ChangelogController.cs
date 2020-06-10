@@ -85,13 +85,16 @@ namespace KerbalChangelog
 			//style.richText = true;
 			var style = new GUIStyle(GUI.skin.label);
 			style.richText = true;
-			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Visit this mod's website"))
+			if (dispcl.webpageValid)
 			{
-				Application.OpenURL("https://" + dispcl.webpage);
+				GUILayout.BeginHorizontal();
+				if (GUILayout.Button("Visit this mod's website"))
+				{
+					Application.OpenURL("https://" + dispcl.webpage);
+				}
+				GUILayout.FlexibleSpace();
+				GUILayout.EndHorizontal();
 			}
-			GUILayout.FlexibleSpace();
-			GUILayout.EndHorizontal();
 			GUILayout.Label(dispcl.ToString(), style);
 
 			//GUILayout.Label(dispcl.ToString());

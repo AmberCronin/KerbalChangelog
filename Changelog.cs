@@ -12,7 +12,7 @@ namespace KerbalChangelog
 		public string license { get; private set; } = null;
 		public string author { get; private set; } = null;
 		public string webpage { get; private set; } = null;
-
+		public bool webpageValid { get; private set; } = false;
 		public bool showCL { get; private set; } = true;
 
 		List<ChangeSet> changeSets = new List<ChangeSet>();
@@ -82,13 +82,10 @@ namespace KerbalChangelog
 				license = _license;
 			}
 			string _website = "";
-			if (cn.TryGetValue("website", ref _website))
-			{
-				if(ValidateWebsite(_website))
-				{
-					webpage = _website;
-				}
-			}
+			cn.TryGetValue("website", ref _website); 
+			webpage = _website;
+			if(webpage != "")
+				webpageValid = ValidateWebsite(webpage);
 
 
 			foreach (ConfigNode vn in cn.GetNodes("VERSION"))
@@ -111,24 +108,24 @@ namespace KerbalChangelog
 		}
 		bool ValidateWebsite(string url)
 		{
-			string[] urls = { 	"github.com", 
-								"forum.kerbalspaceprogram.com", 
-								"kerbaltek.com", 
-								"KerbalX.com", 
-								"spacedock.info", 
-								"kerbokatz.github.io", 
-								"krpc.github.io", 
-								"genhis.github.io", 
-								"snjo.github.io",
-								"www.curseforge.com" };
-
-			Uri siteuri = new Uri("https://" + url);
+			Debug.Log("Validating url: " + url);
+			string[] validhosts = { 	"github.com", 
+										"forum.kerbalspaceprogram.com", 
+										"kerbaltek.com", 
+										"KerbalX.com", 
+										"spacedock.info", 
+										"kerbokatz.github.io", 
+										"krpc.github.io", 
+										"genhis.github.io", 
+										"snjo.github.io",
+										"www.curseforge.com",
+										"ksp.sarbian.com" };
+			string uri = @"https://" + url;
+			Debug.Log(uri);
+			Uri siteuri = new Uri(uri);
 			string site = siteuri.Host;
 
-			var hosts = from uristr in urls
-						select (new Uri("https://" + uristr)).Host;
-
-			if (hosts.Contains(site))
+			if (validhosts.Contains(site))
 			{
 				return true;
 			}
