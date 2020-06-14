@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace KerbalChangelog
 {
@@ -43,15 +44,23 @@ namespace KerbalChangelog
 			{
 				changes.Add(new Change(chn, cfgDirName));
 			}
+			changes = changes.OrderBy(o => o.type).ToList();
 		}
 		public override string ToString()
 		{
-			string ret = version + "\n";
+			string ret = version + "\n\n";
+			Change prev = null;
+
 			foreach (Change c in changes)
 			{
+				if (prev == null && c.type == ChangeType.HighPriority)
+					ret += "High Priority\n";
+				if (prev != null && c.type != prev.type)
+					ret += "\n" + c.type.ToString() + "\n";
 				ret += c.ToString();
+				prev = c;
 			}
-			return ret + "\n";
+			return ret + "\n\n\n"; //add three lines between new versions actually, because we have one line between different changes now
 		}
 
 		public int CompareTo(object obj)
