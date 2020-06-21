@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace KerbalChangelog
 {
-	[KSPAddon(KSPAddon.Startup.MainMenu, false)]
+	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
 	public class ChangelogController : MonoBehaviour
 	{
 		Rect displayWindow;
@@ -28,6 +28,7 @@ namespace KerbalChangelog
 			changelogs = LoadChangelogs();
 			Debug.Log("[KCL] Displaying " + changelogs.Count + " changelogs");
 			changesLoaded = true;
+			DontDestroyOnLoad(this);
 		}
 
 		private List<Changelog> LoadChangelogs()
@@ -114,6 +115,7 @@ namespace KerbalChangelog
 			if (GUILayout.Button("Close"))
 			{
 				showChangelog = false;
+				Destroy(this);
 			}
 			if (GUILayout.Button("Next"))
 			{
