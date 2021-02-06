@@ -3,13 +3,13 @@ namespace KerbalChangelog
 {
 	public enum ChangeType
 	{
+		None,
 		HighPriority,
 		Add,
 		Change,
 		Depreciate,
 		Remove,
 		Fix,
-		Security,
-		None
+		Security
 	}
 }
