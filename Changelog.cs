@@ -25,7 +25,7 @@ namespace KerbalChangelog
 				{
 					return changeSets[0].version;
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					Debug.Log("[KCL] No changesets exist.");
 					return null;

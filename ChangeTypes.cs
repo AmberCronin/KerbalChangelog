@@ -7,9 +7,10 @@ namespace KerbalChangelog
 		HighPriority,
 		Add,
 		Change,
-		Depreciate,
+		Deprecate,
 		Remove,
 		Fix,
-		Security
+		Security,
+		Performance,
 	}
 }

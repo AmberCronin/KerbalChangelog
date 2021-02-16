@@ -38,7 +38,7 @@ namespace KerbalChangelog
 						type = ChangeType.Change;
 						break;
 					case "D":
-						type = ChangeType.Depreciate;
+						type = ChangeType.Deprecate;
 						break;
 					case "R":
 						type = ChangeType.Remove;
@@ -51,6 +51,9 @@ namespace KerbalChangelog
 						break;
 					case "H":
 						type = ChangeType.HighPriority;
+						break;
+					case "P":
+						type = ChangeType.Performance;
 						break;
 					default:
 						type = ChangeType.None;
